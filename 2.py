@@ -1,20 +1,14 @@
- 
-#Q1. Write a program that finds and prints the minimum and maximum values in a singly linked list.
-# >> So you need to create a singly linked list and populate it with some data.
-# >> Write a function to find the min and max values.
-
-    
-
-
 class Node: 
-    def __init__(self,data):
+    def __init__(self, data):
         self.data = data
         self.next = None
         self.prev = None
 
 class CircularDoublyLinkedList:
-    def __inti__(self):
+    def __init__(self, *values):
         self.head = None
+        for value in values:
+            self.append(value)
 
     def append(self, data):
         new_node = Node(data)
@@ -42,4 +36,27 @@ class CircularDoublyLinkedList:
                 break
         print()
 
+def remove_duplicates(circular_list):
+    current = circular_list.head
+    while True:
+        duplicate_data = current.data
+        runner = current.next
 
+        while runner != current:
+            if runner.data == duplicate_data:
+                # Fjern noden runner da den inneholder en duplikat
+                # Oppdater pekere for å hoppe over noden
+                runner.prev.next = runner.next
+                runner.next.prev = runner.prev
+            runner = runner.next
+
+        current = current.next
+        if current == circular_list.head:
+            break
+
+# Create the list and remove duplicates
+my_list = CircularDoublyLinkedList(1, 1, 1, 4, 3, 5, 5, 4, 3, 4, 3, 2)
+remove_duplicates(my_list)
+
+# Display the modified list
+my_list.display()

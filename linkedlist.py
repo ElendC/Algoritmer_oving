@@ -3,6 +3,8 @@
 # >> So you need to create a singly linked list and populate it with some data.
 # >> Write a function to find the min and max values.
 
+    
+
 
 class Node: 
     def __init__(self,data):
@@ -41,6 +43,3 @@ class CircularDoublyLinkedList:
         print()
 
 
-
-    
-    

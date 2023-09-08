@@ -43,15 +43,12 @@ class LinkedList:                       #tom linked list
             next_node = next_node.next
         print("Lowest value: ", minV)
             
-
 list = LinkedList()
 
 for i in range(8):
     i = random.randint(1, 99)
     list.addNode(i)
 
-
-    
 list.print_linked_list()
 list.max_value()
 list.min_value()

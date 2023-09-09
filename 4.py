@@ -8,7 +8,7 @@ class Task:
         self.name = str(name)
         self.priority = int(priority)
         self.due_date = due_date
-        self.completet = False
+        self.completed = False
         self.next = None
 
 
@@ -23,9 +23,8 @@ class LinkedListTasks:
         # due_date = datetime.strptime(due_date_input, '%Y-%m-%d')
 
         # JUST FOR TESTING
-        letters = "eariotnslh"
         name = str(random.randint(1,10))
-        priority = random.randint(1, 20)
+        priority = random.randint(10, 20)
         due_date = random.randint(50, 100)
         # JUST FOR TESTING
 
@@ -42,13 +41,15 @@ class LinkedListTasks:
             currentTask = currentTask.next
         print(f"Your Tasks: {list}")
 
-    def deleteTask(self):
-        delete_name = input("Which task would you like to delete: ")
-        currentTask = self.head
 
+    def deleteTask(self):
         if self.head == None:
             print("List is empty")
+            keyboard.wait("space")
             return
+        
+        delete_name = input("Which task would you like to delete: ")
+        currentTask = self.head
 
         if currentTask.name == delete_name:
             self.head = currentTask.next
@@ -60,21 +61,18 @@ class LinkedListTasks:
             else:
                 currentTask = currentTask.next
         
-
 class Menu:
     def __init__(self, linkedList):
         self.linkedList = linkedList
 
     def displayMenu(self):
-        while True:
-            
-            keyboard.wait("space")
-
-          
-            list = ["Add", "Delete", "Display", "Quit"]
+        while True:   
+            # keyboard.wait("space")
+            list = ["Add", "Delete", "Display List", "Select Task", "Quit"]
+            print("Menu: ", end=" ")
             for i in range(len(list)):
-                print(i+1, list[i])
-            selected = input("Select: ")
+                print(list[i],":", i+1 , end=" | ")
+            selected = input("\nSelect: ")
 
             if selected == "1":
                 self.linkedList.addTask()
@@ -84,16 +82,34 @@ class Menu:
 
             if selected == "3":
                 self.linkedList.printLinkedList()
+                input("Enter to contiune")
 
             if selected == "4":
+                k = str(input("which task would you display: "))
+                self.displayTask(k)
+                input("Press enter to contiune")
+
+            if selected == "5":
                 break
+    
+
+            
+
+    def displayTask(self, k):
+        currentTask = self.linkedList.head
+        currentTask2 = self.linkedList.head
+
+        count = 0
+        while currentTask:
+            count += 1
+            currentTask = currentTask.next
+
+        for i in range(count):
+            if currentTask2.name == k:
+                     print(currentTask2.name, currentTask2.priority, currentTask2.due_date, currentTask2.completed)
+            currentTask2 = currentTask2.next
+   
         
-
-
-# list = LinkedListTasks()
-# for i in range(6):
-#     list.addTask()
-# list.printLinkedList()
 
 
 startapp = Menu(LinkedListTasks())

@@ -94,7 +94,7 @@ class Menu:
 # for i in range(6):
 #     list.addTask()
 # list.printLinkedList()
-
+#test
 
 startapp = Menu(LinkedListTasks())
 startapp.displayMenu()

@@ -59,5 +59,6 @@ for i in range(6):
      list.addNode(i)
 
 list.printList()
-list.swapper(2)
+k = int(input("Swap Number: "))
+list.swapper(k)
 list.printList()

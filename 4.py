@@ -93,23 +93,11 @@ class Menu:
                 break
     
 
-            
 
-    def displayTask(self, k):
-        currentTask = self.linkedList.head
-        currentTask2 = self.linkedList.head
-
-        count = 0
-        while currentTask:
-            count += 1
-            currentTask = currentTask.next
-
-        for i in range(count):
-            if currentTask2.name == k:
-                     print(currentTask2.name, currentTask2.priority, currentTask2.due_date, currentTask2.completed)
-            currentTask2 = currentTask2.next
-   
-        
+# list = LinkedListTasks()
+# for i in range(6):
+#     list.addTask()
+# list.printLinkedList()
 
 
 startapp = Menu(LinkedListTasks())

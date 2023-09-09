@@ -4,7 +4,7 @@ import os
 import keyboard
 
 class Task:
-    def __init__(self, name, priority, due_date):  #due_date: datetime | after testing done
+    def __init__(self, name, priority, due_date: datetime):  #due_date: datetime | after testing done
         self.name = str(name)
         self.priority = int(priority)
         self.due_date = due_date
@@ -19,8 +19,15 @@ class LinkedListTasks:
         #REMOVE FOR TESTING
         name = input("Whats you'r task: ")
         priority = int(input("Task priority: "))
-        due_date_input = input("Due date (yyyy:mm:dd): ")
-        due_date = datetime.strptime(due_date_input, '%Y-%m-%d')
+    
+        while True:
+            due_date_input = input("Due date (yyyy-mm-dd): ")
+            try:
+                due_date = datetime.strptime(due_date_input, '%Y-%m-%d')
+                break
+            except ValueError:
+                print("Date needs to be in form YYYY-MM-DD")
+
         #REMOVE FOR TESTING
 
         # JUST FOR TESTING

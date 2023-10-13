@@ -84,7 +84,7 @@ class MyHashTable:
         # 1. Extract the key from each key-value pair
         for i in range(self.max_size):
             if self.liste[i] != None:
-                print(f"{self.liste[i]} \n" )
+                print(f"{i}: {self.liste[i]} \n" )
         
 
 
@@ -98,25 +98,37 @@ class MyHashTable:
 """
 
 # write your code here
+newHashTable = MyHashTable()
+
 with open('Phonebook.csv', 'r') as file:
     next(file)
     for object in file:
-        values = object.strip().split(',')
-        phoneNumber = values[0]
-        name = values[1]
-        MyHashTable.insert(phoneNumber, name)
+        if not object.strip().replace(',' , ''):
+            continue
 
+        values = object.strip().split(',')
+        if len(values) > 3:
+            phoneNumber = values[0]
+            name = values[1]
+            newHashTable.insert(phoneNumber, name)
+    newHashTable.display_all()
+    
+print('__________________________________________________')
 
 
 # """**Part 3:** try to add these two new data into the created hashtable:
 
 # phone_number_1 = '123456789', name_1 = 'UiS'
 
+newHashTable.insert("987654321", 'NTNU')
+
 # phone_number_2 = '987654321', name_2 = 'NTNU'
+
+newHashTable.insert('987654321', 'NTNU')
 
 
 # •	Explain what happened there when you add the second number???
-
+#The first value got overwritten :)
 #  (10 p)
 
 
@@ -125,9 +137,15 @@ with open('Phonebook.csv', 'r') as file:
 
 # phone_number_1 = '123456789'
 # name_1 = 'UiS'
+newHashTable.insert('123456789','UiS')
 
 # phone_number_2 = '987654321'
 # name_2 = 'NTNU'
+newHashTable.insert('987654321','NTNU')
+newHashTable.display_all()
+print("_______________________________________________________________")
+print("________Probing Hash Table___________")
+
 
 # """**Part 4:**
 # Handling Collisions with Linear Probing: As you might have wondered, multiple keys can have the same hash.
@@ -151,62 +169,87 @@ with open('Phonebook.csv', 'r') as file:
 
 # """
 
-# def get_valid_index(data_list, key):
-#     # Start with the index returned by get_index
+def get_valid_index(data_list, key):
+    # Start with the index returned by get_index
+    index = ProbingHashTable.get_index(key)
+    return index
 
-# class ProbingHashTable:
-#     def __init__(self):
+class ProbingHashTable:
+    def __init__(self):
 
-#         # 1. Create a list of size `list_size` with all values None
-#         max_size = 4096
+        # 1. Create a list of size `list_size` with all values None
+        self.max_size = 4096
+        self.liste = [None]*self.max_size
 
+    def get_valid_index(self,key):
+        index = self.get_index(key)
+        while self.liste[index] is not None:
+            index += 1
+            if index > self.max_size-1:
+                index = 0
+        return index
 
-#     def get_valid_index(self,key):
+    def get_hash(self,key):
+        sum = 0
+        for i in range(len(key)):
+            sum = sum + ord(key[i])
+        return sum
 
+    def get_index(self, key):
+        # Take the remainder of the result with the size of the data list and return the index of the list
+        sum = self.get_hash(key)
+        return sum % self.max_size
 
+    def insert(self, key, value):
+        # 1. Find the index for the key using get_index
+        index = self.get_valid_index(key)
 
-#     def get_hash(self,key):
-#         # write simple algorithm for hashing, which can convert strings into numeric list indices.
-#         # Iterate over the string, character by character Convert each character to a number using Python's built-in ord function.
-#         # Add the numbers for each character to obtain the hash for the entire string
-#         # Take the remainder of the result with the size of the data list
-#         # Variable to store the result (updated after each iteration)
-
-
-
-#     def get_index(self, key):
-#         # Take the remainder of the result with the size of the data list and return the index of the list
-
-
-#     def insert(self, key, value):
-#         # 1. Find the index for the key using get_index
-
-#         # 2. Store the key-value pair at the right index
-
-
-#     def search(self, key):
-#         # 1. Find the index for the key using get_index
-
-
-#         # 2. Retrieve the data stored at the index
-
-
-#         # 3. Return the value if found, else return None
+        # 2. Store the key-value pair at the right index
+        self.liste[index] = value    
 
 
-#     def update(self, key, value):
-#         # 1. Find the index for the key using get_index
+    def search(self, key):
+        # 1. Find the index for the key using get_index
+        index = self.get_valid_index(key)
 
+        # 2. Retrieve the data stored at the index
+        data = self.liste[index]
 
-#         # 2. Store the new key-value pair at the right index
+        # 3. Return the value if found, else return None
+        return data
 
+    def update(self, key, value):
+        # 1. Find the index for the key using get_index
+        index = self.get_valid_index(key)
 
-#     def display_all(self):
-#         # 1. Extract the key from each key-value pair
+        # 2. Store the new key-value pair at the right index
+        self.liste[index] = value
+
+    def display_all(self):
+        # 1. Extract the key from each key-value pair
+        for i in range(len(self.liste)):
+            if self.liste[i] != None:
+                print(f"{i} {self.liste[i]}")
 
 # """read csv file and store the data into a hashtable object"""
 
 # # write your code here
+newProbingHasTable = ProbingHashTable()
+
+with open('Phonebook.csv', 'r') as file:
+    next(file)
+    for object in file:
+        if not object.strip().replace(',' , ''):
+            continue
+
+        values = object.strip().split(',')
+        if len(values) > 3:
+            phoneNumber = values[0]
+            name = values[1]
+            newProbingHasTable.insert(phoneNumber, name)
+    newProbingHasTable.display_all()
+        
+
 
 # """Try to add two new numbers and test
 #  (10 p)
@@ -214,16 +257,14 @@ with open('Phonebook.csv', 'r') as file:
 
 # phone_number_1 = '123456789'
 # name_1 = 'UiS'
-
 # phone_number_2 = '987654321'
 # name_2 = 'NTNU'
 
 # #insert the first key
-
-
+newProbingHasTable.insert("123456789", "UiS")
 
 # # Insert a colliding key
-
+newProbingHasTable.insert("987654321", "NTNU")
 
 # # Check the new and old keys
-
+newProbingHasTable.display_all()

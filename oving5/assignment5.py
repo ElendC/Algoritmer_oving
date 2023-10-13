@@ -55,7 +55,6 @@ class MyHashTable:
         return sum % self.max_size
 
 
-
     def insert(self, key, value):
         # 1. Find the index for the key using get_index
         index = self.get_index(key)
@@ -100,8 +99,12 @@ class MyHashTable:
 
 # write your code here
 with open('Phonebook.csv', 'r') as file:
-    for i in file:
-        print(i[0])
+    next(file)
+    for object in file:
+        values = object.strip().split(',')
+        phoneNumber = values[0]
+        name = values[1]
+        MyHashTable.insert(phoneNumber, name)
 
 
 

@@ -40,44 +40,57 @@ class MyHashTable:
     def __init__(self):
 
         # 1. Create a list of size `list_size` with all values None
-        max_size = 4096
+        self.max_size = 4096
+        self.liste = [None]*self.max_size
 
-    def get_hash(self,key):
-        # write simple algorithm for hashing, which can convert strings into numeric list indices.
-        # Iterate over the string, character by character Convert each character to a number using Python's built-in ord function.
-        # Add the numbers for each character to obtain the hash for the entire string
-        # Take the remainder of the result with the size of the data list
-        # Variable to store the result (updated after each iteration)
+    def get_hash(self,key):    
+        sum = 0
+        for i in range(len(key)):
+            sum = sum + ord(key[i])
+        return sum
 
 
     def get_index(self, key):
-        # Take the remainder of the result with the size of the data list and return the index of the list
+        sum = self.get_hash(key)
+        return sum % self.max_size
+
+
 
     def insert(self, key, value):
         # 1. Find the index for the key using get_index
-
+        index = self.get_index(key)
+         
         # 2. Store the key-value pair at the right index
-
+        self.liste[index] = value    
 
     def search(self, key):
         # 1. Find the index for the key using get_index
-
+        index = self.get_index(key)
 
         # 2. Retrieve the data stored at the index
-
+        data = self.liste[index]
 
         # 3. Return the value if found, else return None
+        return data
+
 
     def update(self, key, value):
         # 1. Find the index for the key using get_index
-
+        index = self.get_index(key)
 
         # 2. Store the new key-value pair at the right index
+        self.liste[index] = value
 
     def display_all(self):
         # 1. Extract the key from each key-value pair
+        for i in range(self.max_size):
+            if self.liste[i] != None:
+                print(f"{self.liste[i]} \n" )
+        
+
 
 """**Part2:** Read the phonebook CSV file and store the key/value data in the hashtable object created in the “My_HashTable class”, hashtable size is : max_size =4096
+
 
 * take phone column as the key
 * take the name column as the value
@@ -86,123 +99,128 @@ class MyHashTable:
 """
 
 # write your code here
-
-"""**Part 3:** try to add these two new data into the created hashtable:
-
-phone_number_1 = '123456789', name_1 = 'UiS'
-
-phone_number_2 = '987654321', name_2 = 'NTNU'
-
-
-•	Explain what happened there when you add the second number???
-
- (10 p)
+with open('Phonebook.csv', 'r') as file:
+    for i in file:
+        print(i[0])
 
 
 
-"""
+# """**Part 3:** try to add these two new data into the created hashtable:
 
-phone_number_1 = '123456789'
-name_1 = 'UiS'
+# phone_number_1 = '123456789', name_1 = 'UiS'
 
-phone_number_2 = '987654321'
-name_2 = 'NTNU'
+# phone_number_2 = '987654321', name_2 = 'NTNU'
 
-"""**Part 4:**
-Handling Collisions with Linear Probing: As you might have wondered, multiple keys can have the same hash.
 
-Data stored against one key may override the data stored against another, if they have the same hash.
+# •	Explain what happened there when you add the second number???
 
-* So Define a function called get_valid_index, which starts searching the data list from the index determined by the hashing function get_index and returns the first index which is either empty or contains a key-value pair matching the given key. Here you implement the linear probing method to find the available slot and return the index.
+#  (10 p)
 
 
 
-* now implement a hash table class with linear probing. You need to define a  "ProbingHashTable" class.
-* add get_valid_index function into the ProbingHashTable class
+# """
 
-* Implement all the operations for this class: Insert,Search,Update, display_all
+# phone_number_1 = '123456789'
+# name_1 = 'UiS'
 
+# phone_number_2 = '987654321'
+# name_2 = 'NTNU'
 
- (40 p)
+# """**Part 4:**
+# Handling Collisions with Linear Probing: As you might have wondered, multiple keys can have the same hash.
 
+# Data stored against one key may override the data stored against another, if they have the same hash.
 
-
-
-"""
-
-def get_valid_index(data_list, key):
-    # Start with the index returned by get_index
-
-class ProbingHashTable:
-    def __init__(self):
-
-        # 1. Create a list of size `list_size` with all values None
-        max_size = 4096
-
-
-    def get_valid_index(self,key):
+# * So Define a function called get_valid_index, which starts searching the data list from the index determined by the hashing function get_index and returns the first index which is either empty or contains a key-value pair matching the given key. Here you implement the linear probing method to find the available slot and return the index.
 
 
 
-    def get_hash(self,key):
-        # write simple algorithm for hashing, which can convert strings into numeric list indices.
-        # Iterate over the string, character by character Convert each character to a number using Python's built-in ord function.
-        # Add the numbers for each character to obtain the hash for the entire string
-        # Take the remainder of the result with the size of the data list
-        # Variable to store the result (updated after each iteration)
+# * now implement a hash table class with linear probing. You need to define a  "ProbingHashTable" class.
+# * add get_valid_index function into the ProbingHashTable class
+
+# * Implement all the operations for this class: Insert,Search,Update, display_all
+
+
+#  (40 p)
 
 
 
-    def get_index(self, key):
-        # Take the remainder of the result with the size of the data list and return the index of the list
+
+# """
+
+# def get_valid_index(data_list, key):
+#     # Start with the index returned by get_index
+
+# class ProbingHashTable:
+#     def __init__(self):
+
+#         # 1. Create a list of size `list_size` with all values None
+#         max_size = 4096
 
 
-    def insert(self, key, value):
-        # 1. Find the index for the key using get_index
-
-        # 2. Store the key-value pair at the right index
-
-
-    def search(self, key):
-        # 1. Find the index for the key using get_index
-
-
-        # 2. Retrieve the data stored at the index
-
-
-        # 3. Return the value if found, else return None
-
-
-    def update(self, key, value):
-        # 1. Find the index for the key using get_index
-
-
-        # 2. Store the new key-value pair at the right index
-
-
-    def display_all(self):
-        # 1. Extract the key from each key-value pair
-
-"""read csv file and store the data into a hashtable object"""
-
-# write your code here
-
-"""Try to add two new numbers and test
- (10 p)
-"""
-
-phone_number_1 = '123456789'
-name_1 = 'UiS'
-
-phone_number_2 = '987654321'
-name_2 = 'NTNU'
-
-#insert the first key
+#     def get_valid_index(self,key):
 
 
 
-# Insert a colliding key
+#     def get_hash(self,key):
+#         # write simple algorithm for hashing, which can convert strings into numeric list indices.
+#         # Iterate over the string, character by character Convert each character to a number using Python's built-in ord function.
+#         # Add the numbers for each character to obtain the hash for the entire string
+#         # Take the remainder of the result with the size of the data list
+#         # Variable to store the result (updated after each iteration)
 
 
-# Check the new and old keys
+
+#     def get_index(self, key):
+#         # Take the remainder of the result with the size of the data list and return the index of the list
+
+
+#     def insert(self, key, value):
+#         # 1. Find the index for the key using get_index
+
+#         # 2. Store the key-value pair at the right index
+
+
+#     def search(self, key):
+#         # 1. Find the index for the key using get_index
+
+
+#         # 2. Retrieve the data stored at the index
+
+
+#         # 3. Return the value if found, else return None
+
+
+#     def update(self, key, value):
+#         # 1. Find the index for the key using get_index
+
+
+#         # 2. Store the new key-value pair at the right index
+
+
+#     def display_all(self):
+#         # 1. Extract the key from each key-value pair
+
+# """read csv file and store the data into a hashtable object"""
+
+# # write your code here
+
+# """Try to add two new numbers and test
+#  (10 p)
+# """
+
+# phone_number_1 = '123456789'
+# name_1 = 'UiS'
+
+# phone_number_2 = '987654321'
+# name_2 = 'NTNU'
+
+# #insert the first key
+
+
+
+# # Insert a colliding key
+
+
+# # Check the new and old keys
 
